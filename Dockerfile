@@ -1,6 +1,7 @@
 FROM node:20-alpine
 
 WORKDIR /app
+ENV PORT=8080
 
 # Install dependencies
 COPY package*.json ./
@@ -9,8 +10,8 @@ RUN npm ci --only=production
 # Copy source
 COPY . .
 
-# Expose port
-EXPOSE 3001
+# Expose Railway-compatible port
+EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
