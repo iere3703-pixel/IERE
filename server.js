@@ -6,6 +6,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || '0.0.0.0';
 
 // BullMQ setup (optional - for job queue)
 let researchQueue = null;
@@ -81,8 +82,8 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const server = app.listen(PORT, () => {
-  console.log(`IERE Backend Server running on port ${PORT}`);
+const server = app.listen(PORT, HOST, () => {
+  console.log(`IERE Backend Server running on ${HOST}:${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
