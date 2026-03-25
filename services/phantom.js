@@ -110,32 +110,32 @@ function getResearchErrorMessage(error) {
   const message = rawMessage.toLowerCase();
 
   if (message.includes('timed out')) {
-    return 'Research is taking longer than expected on Manus. Use Refresh to sync the final result.';
+    return 'Research is taking longer than expected. Use Refresh to sync the final result.';
   }
 
   if (isRetryableManusPollError(error)) {
-    return 'Lost contact with Manus while polling. The task may still finish there. Use Refresh to sync the final result.';
+    return 'Lost contact with the research engine while polling. The task may still finish. Use Refresh to sync the final result.';
   }
 
   if (message.includes('manus task failed')) {
     const detail = rawMessage.replace(/^manus task failed:\s*/i, '').trim();
     if (detail && detail.toLowerCase() !== 'task failed') {
-      return `Manus failed the research task: ${detail}`;
+      return `Research task failed: ${detail}`;
     }
 
-    return 'Manus reported that the research task failed before any results were returned. Check the Manus task and try again.';
+    return 'The research task failed before any results were returned. Check the request and try again.';
   }
 
   if (message.includes('manus api error: 401') || message.includes('manus api error: 403')) {
-    return 'Manus authentication failed. Check the MANUS_API_KEY and workspace access.';
+    return 'Research service authentication failed. Check the server configuration and try again.';
   }
 
   if (message.includes('manus api error: 429')) {
-    return 'Manus rate-limited the research request. Wait a moment and try again.';
+    return 'Research request rate-limited. Wait a moment and try again.';
   }
 
   if (message.includes('manus api error: 400')) {
-    return 'Manus rejected the research request. Check the prompt or agent profile and try again.';
+    return 'Research request was rejected. Check the prompt or selected sources and try again.';
   }
 
   if (message.includes('credit balance is too low to access the anthropic api')) {
